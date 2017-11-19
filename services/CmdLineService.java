@@ -1,7 +1,6 @@
 package BigProject.services;
 
 import BigProject.services.impl.MenuServiceImpl;
-
 import java.util.Scanner;
 
 public class CmdLineService {
@@ -9,76 +8,90 @@ public class CmdLineService {
     private static Scanner command = new Scanner(System.in);
     static MenuService menuService = (MenuService) new MenuServiceImpl();
 
-    String Back;
-
-    public static void showMenuMain(){
+    public static void showMenuMain(String back){
+        System.out.println("Меню Главное");
         System.out.println("1. Перейти в MenuA");
         System.out.println("2. Перейти в MenuВ");
         System.out.println("3. Выход");
 
-        String Back = "showMenuMain";
+        back  = "MenuMain";
+
         int s = readCommand();
         switch (s) {
             case 1:
-                showMenuA();
+                showMenuA(back);
                 break;
             case 2:
-                showMenuB();
+                showMenuB(back);
                 break;
             case 3:
                 menuService.exitMenu();
                 break;
             default:
                 System.out.println("Неправильный ввод \n");
-                showMenuMain();
+                showMenuMain(back);
                 break;
         }
     }
 
-    public static void showMenuA(){
+    public static void showMenuA(String back){
+        System.out.println("Меню А");
         System.out.println("1. Вернуться в MenuMain");
         System.out.println("2. Сделать что-то в меню А");
-        System.out.println("3. Выход");
+        System.out.println("3. Перейти в MenuВ");
+        System.out.println("4. Выход");
+
+        back = back + "/MenuA";
 
         int s = readCommand();
         switch (s) {
             case 1:
-                menuService.comeBack();
+                menuService.comeBack(back);
                 break;
             case 2:
                 System.out.println("Что-то сделано в Меню-А \n");
-                showMenuA();
+                showMenuA(back);
                 break;
             case 3:
+                showMenuB(back);
+                break;
+            case 4:
                 menuService.exitMenu();
                 break;
             default:
                 System.out.println("Неправильный ввод \n");
-                showMenuA();
+                showMenuA(back);
                 break;
         }
     }
 
-    public static void showMenuB(){
+    public static void showMenuB(String back){
+        System.out.println("Меню Б");
         System.out.println("1. Вернуться в MenuMain ");
         System.out.println("2. Сделать что-то в Меню-B");
-        System.out.println("3. Выход");
+        System.out.println("3. Перейти в MenuА");
+        System.out.println("4. Выход");
+
+        back = back + "/MenuB";
 
         int s = readCommand();
         switch (s) {
             case 1:
-                menuService.comeBack();
+                menuService.comeBack(back);
                 break;
             case 2:
                 System.out.println("Что-то сделано в Меню-B \n");
-                showMenuB();
+                showMenuB(back);
                 break;
             case 3:
+                showMenuA(back);
+                break;
+            case 4:
                 menuService.exitMenu();
                 break;
             default:
                 System.out.println("Неправильный ввод \n");
-                showMenuB();
+                showMenuB(back);
                 break;
         }
     }

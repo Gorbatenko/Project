@@ -2,7 +2,7 @@ package BigProject.services;
 
 public interface MenuService {
 
-    void comeBack();
+    void comeBack(String back);
 
     boolean exitMenu();
 }
