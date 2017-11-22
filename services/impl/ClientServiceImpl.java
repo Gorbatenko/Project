@@ -7,10 +7,14 @@ import BigProject.services.CmdLineService;
 public class ClientServiceImpl implements ClientService{
 
     public void addClient() {
-        // do something
+        System.out.println("Чик-Чик. Клиент добавлен.\n");
+    }
+
+    public void editClient() {
+        System.out.println("Пик-Пик. Клиент отредактирован.\n");
     }
 
     public void removeClient() {
-        // do something
+        System.out.println("Ой-Вэй. Клиент удалён.\n");
     }
 }

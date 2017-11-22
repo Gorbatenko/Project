@@ -4,8 +4,8 @@ public interface ClientService {
 
     void addClient();
 
-    void removeClient();
+    void editClient();
 
-    //modify, find etc....
+    void removeClient();
 
 }
