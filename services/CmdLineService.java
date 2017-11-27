@@ -3,110 +3,99 @@ package BigProject.services;
 import BigProject.services.impl.MenuServiceImpl;
 import BigProject.services.impl.ProductServiceImpl;
 import BigProject.services.impl.ClientServiceImpl;
+import BigProject.services.model.Client;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class CmdLineService {
 
-    private Scanner command = new Scanner(System.in);
     MenuService menuService = (MenuService) new MenuServiceImpl();
     ClientService clientService = (ClientService) new ClientServiceImpl();
     ProductService productService = (ProductService) new ProductServiceImpl();
 
     boolean isWork = true;
+    private BufferedReader reader;
 
-    public void goMainMenu() {
+    public CmdLineService(ClientServiceImpl clientService, ProductServiceImpl productService, MenuServiceImpl menuService) {
+        this.productService = productService;
+        this.reader = new BufferedReader(new InputStreamReader(System.in));
+        this.clientService = clientService;
+    }
+
+    public void goMainMenu() throws IOException {
         do {
             menuService.showMainMenu();
-            try{
-                int s = command.nextInt();
-                switch (s) {
-                    case 1:
-                        goClientMenu();
-                        break;
-                    case 2:
-                        goProductMenu();
-                        break;
-                    case 0:
-                        isWork = false;
-                        break;
-                    default:
-                        System.out.println("Неправильный ввод \n");
-                        break;
-                }
-            }catch(InputMismatchException e){
-                System.out.println("Эээх, чтобы не зацикливаться - программа закрывается. \n");
-                break;
+            String s = reader.readLine();
+            switch (s) {
+                case "1":
+                    goClientMenu();
+                    break;
+                case "2":
+                    goProductMenu();
+                    break;
+                case "0":
+                    isWork = false;
+                    break;
+                default:
+                    System.out.println("Неправильный ввод. \nПожалуйста, выберите один из пунктов меню.\n");
+                    break;
             }
-        }while(isWork);
+        } while (isWork);
     }
 
-    public void goClientMenu() {
-//        boolean isWork = true;
+    public void goClientMenu() throws IOException {
         do {
             menuService.showClientMenu();
-            try{
-            int s = command.nextInt();
+            String s = reader.readLine();
             switch (s) {
-                case 1:
-                    clientService.addClient();
+                case "1":
+                    clientService.addClient(new Client());
                     break;
-                case 2:
+                case "2":
                     clientService.editClient();
                     break;
-                case 3:
+                case "3":
                     clientService.removeClient();
                     break;
-                case 4:
+                case "4":
                     goMainMenu();
-//                    menuService.goBack();
                     break;
-                case 0:
+                case "0":
                     isWork = false;
                     break;
                 default:
-                    System.out.println("Неправильный ввод \n");
+                    System.out.println("Неправильный ввод. \nПожалуйста, выберите один из пунктов меню.\n");
                     break;
             }
-            }catch(InputMismatchException e){
-                System.out.println("Эээх, чтобы не зацикливаться - программа закрывается. \n");
-                break;
-            }
-        }while(isWork);
+        } while (isWork);
     }
 
-    public void goProductMenu() {
-//        boolean isWork = true;
+    public void goProductMenu() throws IOException {
         do {
             menuService.showProductMenu();
-            try{
-            int s = command.nextInt();
+            String s = reader.readLine();
             switch (s) {
-                case 1:
+                case "1":
                     productService.addProduct();
                     break;
-                case 2:
+                case "2":
                     productService.editProduct();
                     break;
-                case 3:
+                case "3":
                     productService.removeProduct();
                     break;
-                case 4:
+                case "4":
                     goMainMenu();
-//                    menuService.goBack();
                     break;
-                case 0:
+                case "0":
                     isWork = false;
                     break;
                 default:
-                    System.out.println("Неправильный ввод \n");
+                    System.out.println("Неправильный ввод. \nПожалуйста, выберите один из пунктов меню.\n");
                     break;
             }
-        }catch(InputMismatchException e){
-            System.out.println("Эээх, чтобы не зацикливаться - программа закрывается. \n");
-            break;
-        }
-        }while(isWork);
+        } while (isWork);
     }
 }
