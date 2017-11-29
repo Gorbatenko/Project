@@ -8,6 +8,7 @@ import BigProject.services.model.Client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class CmdLineService {
 
@@ -51,15 +52,30 @@ public class CmdLineService {
             String s = reader.readLine();
             switch (s) {
                 case "1":
-                    clientService.addClient(new Client());
+                    clientService.addClient();
                     break;
                 case "2":
-                    clientService.editClient();
+                    System.out.println("Введите ID:");
+                    int indexId = -1;
+                    int id = clientService.getReadId();
+                    List<Client> clientsList = clientService.getClientsList();
+                    for (int i = 0; i < clientsList.size(); i++) {
+                        Client client = clientsList.get(i);
+                        if (client.getId() == id) {
+                            indexId = i;
+                            goEditClientMenu(indexId);
+                            break;
+                        }
+                        System.out.println("В базе нет клиента с таким Id\n");
+                    }
                     break;
                 case "3":
                     clientService.removeClient();
                     break;
                 case "4":
+                    clientService.showClientLists();
+                    break;
+                case "9":
                     goMainMenu();
                     break;
                 case "0":
@@ -71,6 +87,42 @@ public class CmdLineService {
             }
         } while (isWork);
     }
+
+    private void goEditClientMenu(int indexId) throws IOException {
+        do {
+            menuService.showEditClientMenu();
+            String s = reader.readLine();
+            String editParam = "";
+            switch (s) {
+                case "1":
+                    editParam = "новое имя";
+                    clientService.editClient(indexId, editParam);
+                    break;
+                case "2":
+                    editParam= "новую фамилию";
+                    clientService.editClient(indexId, editParam);
+                    break;
+                case "3":
+                    editParam = "новую почту";
+                    clientService.editClient(indexId, editParam);
+                    break;
+                case "4":
+                    editParam = "новый телефон";
+                    clientService.editClient(indexId, editParam);
+                    break;
+                case "9":
+                    goClientMenu();
+                    break;
+                case "0":
+                    isWork = false;
+                    break;
+                default:
+                    System.out.println("Неправильный ввод. \nПожалуйста, выберите один из пунктов меню.\n");
+                    break;
+            }
+        } while (isWork);
+    }
+
 
     public void goProductMenu() throws IOException {
         do {

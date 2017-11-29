@@ -3,13 +3,20 @@ package BigProject.services;
 import BigProject.services.model.Client;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface ClientService {
 
-    void addClient(Client client) throws IOException;
+    void addClient() throws IOException;
 
-    void editClient();
+    void editClient(int indexId, String editParam) throws IOException;
 
-    void removeClient();
+    void removeClient() throws IOException;
+
+    void showClientLists();
+
+    int getReadId() throws IOException;
+
+    List<Client> getClientsList();
 
 }
