@@ -11,12 +11,11 @@ public interface ClientService {
 
     void editClient(int indexId, String editParam) throws IOException;
 
-    void removeClient() throws IOException;
+    void removeClient(int indexId);
 
-    void showClientLists();
+    void showClientsList();
 
     int getReadId() throws IOException;
 
     List<Client> getClientsList();
-
 }

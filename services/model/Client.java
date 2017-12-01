@@ -35,8 +35,26 @@ public class Client {
         return phone;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
     @Override
     public String toString() {
         return "[" + id + ", " + name + ", " + surname + ", " + email + ", " + phone + "]";
     }
+
+
 }

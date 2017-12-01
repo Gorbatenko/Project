@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class ClientServiceImpl implements ClientService {
@@ -30,85 +31,79 @@ public class ClientServiceImpl implements ClientService {
         System.out.println("Введите почту:");
         String email = reader.readLine();
         System.out.println("Введите телефон, без кода страны:");
-        int phone;
-        while (true) {
-            try {
-                phone = new Integer(reader.readLine());
-                if (phone != 0) {
-                    break;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Введите телефон цифрами.");
-            }
-        }
-        clientsList.add(new Client(id, name, surname, email, phone));
-        Client client = clientsList.get(clientsList.size() - 1);
-        System.out.println("Клиент Id=" + client.getId() + " успешно добавлен!\n");
-    }
+        Integer phone = readId();
 
-    public List<Client> showClientList() {
-        return clientsList;
+        /*"этот кусок работает не правильно. Он таки редактирует существующий Ид, но всё равно добавляет еще в конце такой же (столько же, сколько отредактировал)*/
+//        if (clientsList.size() > 0) {
+//            for (int i = 0; i < clientsList.size(); i++) {
+//                Client client = clientsList.get(i);
+//                if (client.getId() == id) {
+//                    client.setName(name);
+//                    client.setSurname(surname);
+//                    client.setEmail(email);
+//                    client.setPhone(phone);
+//                    System.out.println("Клиент добавлен внутри!\n");
+//                } else {
+//                    clientsList.add(new Client(id, name, surname, email, phone));
+//                    System.out.println("Клиент добавлен в серединке!\n");
+//                }
+//            }
+//        } else {
+//            clientsList.add(new Client(id, name, surname, email, phone));
+//            System.out.println("Клиент добавлен снаружи!\n");
+//        }
+        clientsList.add(new Client(id, name, surname, email, phone));
+        System.out.println("Клиент Id=" + id + " успешно добавлен!\n");
     }
 
     @Override
-    public void showClientLists() {
-        System.out.println("Список всех клиентов:");
-        for (int i = 0; i < clientsList.size(); i++) {
-            System.out.println(clientsList.get(i));
+    public void showClientsList() {
+        List<Client> clientsList = getClientsList();
+        if (clientsList.size() > 0) {
+            System.out.println("Список всех клиентов:");
+            for (int i = 0; i < clientsList.size(); i++) {
+                System.out.println(clientsList.get(i));
+            }
+        } else {
+            System.out.println("База клиентов пуста.\n");
         }
-        System.out.println();
     }
 
     public void editClient(int indexId, String editParam) throws IOException{
         Client client = clientsList.get(indexId);
-        String editParamNew = "";
-        int editParamNewInt = 0;
-
-        Integer id = client.getId();
-        String name = client.getName();
-        String surname = client.getSurname();
-        String email = client.getEmail();
-        int phone = client.getPhone();
+        String name, surname, email;
+        int phone;
 
         System.out.println("Введите " + editParam + ":");
 
         switch (editParam) {
             case "новое имя":
-                editParamNew = reader.readLine();
-                name = editParamNew;
+                name = reader.readLine();
+                client.setName(name);
                 break;
             case "новую фамилию":
-                editParamNew = reader.readLine();
-                surname = editParamNew;
+                surname = reader.readLine();
+                client.setSurname(surname);
                 break;
             case "новую почту":
-                editParamNew = reader.readLine();
-                email = editParamNew;
+                email = reader.readLine();
+                client.setEmail(email);
                 break;
             case "новый телефон":
-                editParamNewInt = readId();
-                phone = editParamNewInt;
+                phone = readId();
+                client.setPhone(phone);
                 break;
             default:
                 System.out.println("Что-то новое прилетело в этот метод.\n");
                 break;
         }
-        clientsList.set(indexId, new Client(id, name, surname, email, phone));
         System.out.println("Пик-Пик. Клиент отредактирован.\n");
     }
 
-    public void removeClient() throws IOException {
-        System.out.println("Введите ID:");
-        Integer id = readId();
-        for (int i = 0; i < clientsList.size(); i++) {
-            Client client = clientsList.get(i);
-            if (client.getId() == id) {
-                clientsList.remove(client);
-                System.out.println("Ой-Вэй. Клиент удалён.\n");
-                break;
-            }
-            System.out.println("В базе нет клиента с таким Id\n");
-        }
+    public void removeClient(int indexId) {
+        Client client = clientsList.get(indexId);
+        clientsList.remove(client);
+        System.out.println("Ой-Вэй. Клиент удалён.\n");
     }
 
     private int readId() throws IOException {
@@ -133,4 +128,8 @@ public class ClientServiceImpl implements ClientService {
     public List<Client> getClientsList(){
         return clientsList;
     }
+
+//    public List<Client> showClientList() {
+//        return clientsList;
+//    }
 }

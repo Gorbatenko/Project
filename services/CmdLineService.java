@@ -12,11 +12,11 @@ import java.util.List;
 
 public class CmdLineService {
 
-    MenuService menuService = (MenuService) new MenuServiceImpl();
-    ClientService clientService = (ClientService) new ClientServiceImpl();
-    ProductService productService = (ProductService) new ProductServiceImpl();
+    private MenuService menuService = (MenuService) new MenuServiceImpl();
+    private ClientService clientService = (ClientService) new ClientServiceImpl();
+    private ProductService productService = (ProductService) new ProductServiceImpl();
 
-    boolean isWork = true;
+    private boolean isWork = true;
     private BufferedReader reader;
 
     public CmdLineService(ClientServiceImpl clientService, ProductServiceImpl productService, MenuServiceImpl menuService) {
@@ -46,7 +46,7 @@ public class CmdLineService {
         } while (isWork);
     }
 
-    public void goClientMenu() throws IOException {
+    private void goClientMenu() throws IOException {
         do {
             menuService.showClientMenu();
             String s = reader.readLine();
@@ -55,25 +55,15 @@ public class CmdLineService {
                     clientService.addClient();
                     break;
                 case "2":
-                    System.out.println("Введите ID:");
-                    int indexId = -1;
-                    int id = clientService.getReadId();
-                    List<Client> clientsList = clientService.getClientsList();
-                    for (int i = 0; i < clientsList.size(); i++) {
-                        Client client = clientsList.get(i);
-                        if (client.getId() == id) {
-                            indexId = i;
-                            goEditClientMenu(indexId);
-                            break;
-                        }
-                        System.out.println("В базе нет клиента с таким Id\n");
-                    }
+                    String whereMenu = "goEditClientMenu(indexId)";
+                    viewingClientList(whereMenu);
                     break;
                 case "3":
-                    clientService.removeClient();
+                    whereMenu = "removeClient(indexId)";
+                    viewingClientList(whereMenu);
                     break;
                 case "4":
-                    clientService.showClientLists();
+                    clientService.showClientsList();
                     break;
                 case "9":
                     goMainMenu();
@@ -92,7 +82,7 @@ public class CmdLineService {
         do {
             menuService.showEditClientMenu();
             String s = reader.readLine();
-            String editParam = "";
+            String editParam;
             switch (s) {
                 case "1":
                     editParam = "новое имя";
@@ -123,8 +113,7 @@ public class CmdLineService {
         } while (isWork);
     }
 
-
-    public void goProductMenu() throws IOException {
+    private void goProductMenu() throws IOException {
         do {
             menuService.showProductMenu();
             String s = reader.readLine();
@@ -149,5 +138,33 @@ public class CmdLineService {
                     break;
             }
         } while (isWork);
+    }
+
+    private void viewingClientList(String whereMenu) throws IOException {
+        List<Client> clientsList = clientService.getClientsList();
+        if (clientsList.size() > 0) {
+            System.out.println("Введите Id клиента:");
+            int id = clientService.getReadId();
+            for (int indexId = 0; indexId < clientsList.size(); indexId++) {
+                Client client = clientsList.get(indexId);
+                if (client.getId() == id) {
+                    switch (whereMenu) {
+                        case "goEditClientMenu(indexId)":
+                            goEditClientMenu(indexId);
+                            break;
+                        case "removeClient(indexId)":
+                            clientService.removeClient(indexId);
+                            break;
+                        default:
+                            System.out.println("В метод проверки наличия клиентов, что-то пришло не то\n");
+                            break;
+                    }
+                } else {
+                    System.out.println("В базе нет клиента с таким Id.\n");
+                }
+            }
+        } else {
+            System.out.println("База клиентов пуста.\n");
+        }
     }
 }
