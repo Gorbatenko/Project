@@ -1,5 +1,7 @@
 package BigProject.services.model;
 
+import java.util.List;
+
 public class Product {
     private int id;
     private String name; //Название
@@ -54,4 +56,9 @@ public class Product {
     public void setStock(int stock) {
         this.stock = stock;
     }
+
+    public String toString() {
+        return "[" + id + ", " + name + ", " + amount + ", " + price + ", " + stock + "]";
+    }
+
 }

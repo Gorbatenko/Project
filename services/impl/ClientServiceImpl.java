@@ -33,26 +33,24 @@ public class ClientServiceImpl implements ClientService {
         System.out.println("Введите телефон, без кода страны:");
         Integer phone = readId();
 
-        /*"этот кусок работает не правильно. Он таки редактирует существующий Ид, но всё равно добавляет еще в конце такой же (столько же, сколько отредактировал)*/
-//        if (clientsList.size() > 0) {
-//            for (int i = 0; i < clientsList.size(); i++) {
-//                Client client = clientsList.get(i);
-//                if (client.getId() == id) {
-//                    client.setName(name);
-//                    client.setSurname(surname);
-//                    client.setEmail(email);
-//                    client.setPhone(phone);
-//                    System.out.println("Клиент добавлен внутри!\n");
-//                } else {
-//                    clientsList.add(new Client(id, name, surname, email, phone));
-//                    System.out.println("Клиент добавлен в серединке!\n");
-//                }
-//            }
-//        } else {
-//            clientsList.add(new Client(id, name, surname, email, phone));
-//            System.out.println("Клиент добавлен снаружи!\n");
-//        }
-        clientsList.add(new Client(id, name, surname, email, phone));
+        if (clientsList.size() > 0) {
+            for (int i = 0; i < clientsList.size(); i++) {
+                Client client = clientsList.get(i);
+                if (Objects.equals(client.getId(), id)) {
+                    client.setName(name);
+                    client.setSurname(surname);
+                    client.setEmail(email);
+                    client.setPhone(phone);
+                    break;
+                } else {
+                    if (i == clientsList.size()-1) {
+                        clientsList.add(new Client(id, name, surname, email, phone));
+                    }
+                }
+            }
+        } else {
+            clientsList.add(new Client(id, name, surname, email, phone));
+        }
         System.out.println("Клиент Id=" + id + " успешно добавлен!\n");
     }
 
@@ -61,8 +59,8 @@ public class ClientServiceImpl implements ClientService {
         List<Client> clientsList = getClientsList();
         if (clientsList.size() > 0) {
             System.out.println("Список всех клиентов:");
-            for (int i = 0; i < clientsList.size(); i++) {
-                System.out.println(clientsList.get(i));
+            for (Client aClientsList : clientsList) {
+                System.out.println(aClientsList);
             }
         } else {
             System.out.println("База клиентов пуста.\n");
@@ -129,7 +127,4 @@ public class ClientServiceImpl implements ClientService {
         return clientsList;
     }
 
-//    public List<Client> showClientList() {
-//        return clientsList;
-//    }
 }

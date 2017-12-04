@@ -128,6 +128,9 @@ public class CmdLineService {
                     productService.removeProduct();
                     break;
                 case "4":
+                    productService.showProducts();
+                    break;
+                case "9":
                     goMainMenu();
                     break;
                 case "0":
@@ -160,7 +163,9 @@ public class CmdLineService {
                             break;
                     }
                 } else {
-                    System.out.println("В базе нет клиента с таким Id.\n");
+                    if (indexId == clientsList.size()-1) {
+                        System.out.println("В базе нет клиента с таким Id.\n");
+                    }
                 }
             }
         } else {

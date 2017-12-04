@@ -1,10 +1,14 @@
 package BigProject.services;
 
+import java.io.IOException;
+
 public interface ProductService {
 
-    void addProduct();
+    void addProduct() throws IOException;
 
     void editProduct();
 
     void removeProduct();
+
+    void showProducts();
 }

@@ -16,7 +16,7 @@ public class MenuServiceImpl implements MenuService {
         System.out.println("1. Добавить клиента;");
         System.out.println("2. Редактировать данные клиента;");
         System.out.println("3. Удалить клиента;");
-        System.out.println("4. Посмотреть весь список клиентов;");
+        System.out.println("4. Посмотреть список всех клиентов;");
         System.out.println("9. Вернуться в Главное меню;");
         System.out.println("0. Выход.");
     }
@@ -24,9 +24,10 @@ public class MenuServiceImpl implements MenuService {
     public void showProductMenu() {
         System.out.println("   -= Продуктовое меню =-");
         System.out.println("1. Добавить продукт;");
-        System.out.println("2. Редактировать параметры продукта;");
+        System.out.println("2. Редактировать параметры продукта; ");
         System.out.println("3. Удалить продукт;");
-        System.out.println("4. Вернуться назад;");
+        System.out.println("4. Посмотреть список всех продуктов;");
+        System.out.println("9. Вернуться назад;");
         System.out.println("0. Выход.");
     }
 
