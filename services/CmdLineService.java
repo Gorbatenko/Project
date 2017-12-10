@@ -3,6 +3,7 @@ package BigProject.services;
 import BigProject.services.impl.MenuServiceImpl;
 import BigProject.services.impl.ProductServiceImpl;
 import BigProject.services.impl.ClientServiceImpl;
+import BigProject.services.impl.WriteReadServiceImpl;
 import BigProject.services.model.Client;
 
 import java.io.BufferedReader;
@@ -15,6 +16,7 @@ public class CmdLineService {
     private MenuService menuService = (MenuService) new MenuServiceImpl();
     private ClientService clientService = (ClientService) new ClientServiceImpl();
     private ProductService productService = (ProductService) new ProductServiceImpl();
+    private WriteReadService writeReadService = (WriteReadService) new WriteReadServiceImpl();
 
     private boolean isWork = true;
     private BufferedReader reader;
@@ -64,6 +66,9 @@ public class CmdLineService {
                     break;
                 case "4":
                     clientService.showClientsList();
+                    break;
+                case "5":
+                    goSaveMenu();
                     break;
                 case "9":
                     goMainMenu();
@@ -132,6 +137,27 @@ public class CmdLineService {
                     break;
                 case "9":
                     goMainMenu();
+                    break;
+                case "0":
+                    isWork = false;
+                    break;
+                default:
+                    System.out.println("Неправильный ввод. \nПожалуйста, выберите один из пунктов меню.\n");
+                    break;
+            }
+        } while (isWork);
+    }
+
+    private void goSaveMenu() throws IOException {
+        do {
+            menuService.showSaveMenu();
+            String s = reader.readLine();
+            switch (s) {
+                case "1":
+                    writeReadService.saveToTxt();
+                    break;
+                case "9":
+                    goClientMenu();
                     break;
                 case "0":
                     isWork = false;

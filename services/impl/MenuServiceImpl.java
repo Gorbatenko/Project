@@ -17,6 +17,7 @@ public class MenuServiceImpl implements MenuService {
         System.out.println("2. Редактировать данные клиента;");
         System.out.println("3. Удалить клиента;");
         System.out.println("4. Посмотреть список всех клиентов;");
+        System.out.println("5. Чтение & Запись;");
         System.out.println("9. Вернуться в Главное меню;");
         System.out.println("0. Выход.");
     }
@@ -38,6 +39,13 @@ public class MenuServiceImpl implements MenuService {
         System.out.println("2. Изменить фамилию;");
         System.out.println("3. Изменить почту;");
         System.out.println("4. Изменить телефон;");
+        System.out.println("9. Вернуться в клиентское меню;");
+        System.out.println("0. Выход.");
+    }
+
+    public void showSaveMenu() {
+        System.out.println("   -= Меню чтения и записи=-");
+        System.out.println("1. Сохаранить;");
         System.out.println("9. Вернуться в клиентское меню;");
         System.out.println("0. Выход.");
     }

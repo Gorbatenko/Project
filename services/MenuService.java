@@ -10,4 +10,5 @@ public interface MenuService {
 
     void showProductMenu();
 
+    void showSaveMenu();
 }
