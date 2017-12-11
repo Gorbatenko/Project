@@ -154,7 +154,8 @@ public class CmdLineService {
             String s = reader.readLine();
             switch (s) {
                 case "1":
-                    writeReadService.saveToTxt();
+                    List<Client> clientsList = clientService.getClientsList();
+                    writeReadService.saveToTxt(clientsList);
                     break;
                 case "9":
                     goClientMenu();

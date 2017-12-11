@@ -7,38 +7,22 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class WriteReadServiceImpl implements WriteReadService {
 
-    private List<Client> clientsList = new ArrayList<>();
-    int noOfLines = 10000;
     public WriteReadServiceImpl() {
 
     }
 
-    @Override
-    public void saveToTxt() {
-        File file = new File("Clients.txt");
-        FileWriter fr = null;
-        BufferedWriter br = null;
-        String dataWithNewLine = clientsList + System.getProperty("line.separator");
-        try{
-            fr = new FileWriter(file);
-            br = new BufferedWriter(fr);
-            for(int i = noOfLines; i>0; i--){
-                br.write(dataWithNewLine);
+    public void saveToTxt(List<Client> clientsList) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File("Clients.txt")))) {
+            for (Client aClientsList : clientsList) {
+                bufferedWriter.write(String.valueOf(aClientsList));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally{
-            try {
-                br.close();
-                fr.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            System.out.println("Клиенты успешно записаны в файл Clients.txt\n");
+        } catch (IOException ex) {
+            System.out.println("Что-то пошло не так.");
         }
     }
 }

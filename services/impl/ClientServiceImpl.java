@@ -62,6 +62,7 @@ public class ClientServiceImpl implements ClientService {
             for (Client aClientsList : clientsList) {
                 System.out.println(aClientsList);
             }
+            System.out.println();
         } else {
             System.out.println("База клиентов пуста.\n");
         }
