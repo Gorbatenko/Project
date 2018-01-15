@@ -1,9 +1,8 @@
 package BigProject.services;
 
 import BigProject.services.impl.MenuServiceImpl;
-import BigProject.services.impl.ProductServiceImpl;
+import BigProject.services.impl.ProductServiceDb;
 import BigProject.services.impl.ClientServiceImpl;
-import BigProject.services.impl.WriteReadServiceImpl;
 import BigProject.services.model.Client;
 
 import java.io.BufferedReader;
@@ -15,13 +14,12 @@ public class CmdLineService {
 
     private MenuService menuService = (MenuService) new MenuServiceImpl();
     private ClientService clientService = (ClientService) new ClientServiceImpl();
-    private ProductService productService = (ProductService) new ProductServiceImpl();
-    private WriteReadService writeReadService = (WriteReadService) new WriteReadServiceImpl();
+    private ProductService productService = (ProductService) new ProductServiceDb();
 
     private boolean isWork = true;
     private BufferedReader reader;
 
-    public CmdLineService(ClientServiceImpl clientService, ProductServiceImpl productService, MenuServiceImpl menuService) {
+    public CmdLineService(ClientServiceImpl clientService, ProductServiceDb productService, MenuServiceImpl menuService) {
         this.productService = productService;
         this.reader = new BufferedReader(new InputStreamReader(System.in));
         this.clientService = clientService;
@@ -66,9 +64,6 @@ public class CmdLineService {
                     break;
                 case "4":
                     clientService.showClientsList();
-                    break;
-                case "5":
-                    goSaveMenu();
                     break;
                 case "9":
                     goMainMenu();
@@ -148,30 +143,8 @@ public class CmdLineService {
         } while (isWork);
     }
 
-    private void goSaveMenu() throws IOException {
-        do {
-            menuService.showSaveMenu();
-            String s = reader.readLine();
-            switch (s) {
-                case "1":
-                    List<Client> clientsList = clientService.getClientsList();
-                    writeReadService.saveToTxt(clientsList);
-                    break;
-                case "9":
-                    goClientMenu();
-                    break;
-                case "0":
-                    isWork = false;
-                    break;
-                default:
-                    System.out.println("Неправильный ввод. \nПожалуйста, выберите один из пунктов меню.\n");
-                    break;
-            }
-        } while (isWork);
-    }
-
     private void viewingClientList(String whereMenu) throws IOException {
-        List<Client> clientsList = clientService.getClientsList();
+        List<Client> clientsList = clientService.getClients();
         if (clientsList.size() > 0) {
             System.out.println("Введите Id клиента:");
             int id = clientService.getReadId();

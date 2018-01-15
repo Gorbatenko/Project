@@ -6,9 +6,9 @@ public interface ProductService {
 
     void addProduct() throws IOException;
 
-    void editProduct();
+    void editProduct() throws IOException;
 
-    void removeProduct();
+    void removeProduct() throws IOException;
 
     void showProducts();
 }

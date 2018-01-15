@@ -52,7 +52,7 @@ public class Client {
     }
 
     public String toString() {
-        return "[" + id + ", " + name + ", " + surname + ", " + email + ", " + phone + "]";
+        return "[" + id + "; " + name + "; " + surname + "; " + email + "; " + phone + "]";
     }
 
 }

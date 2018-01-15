@@ -17,5 +17,5 @@ public interface ClientService {
 
     int getReadId() throws IOException;
 
-    List<Client> getClientsList();
+    List<Client> getClients();
 }

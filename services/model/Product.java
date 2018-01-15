@@ -5,11 +5,11 @@ import java.util.List;
 public class Product {
     private int id;
     private String name; //Название
-    private int amount; // Шт
-    private int price; // Цена
+    private int amount; // Количество, Шт
+    private double price; // Цена, грн.коп
     private int stock; // Склад
 
-    public Product(int id, String name, int amount, int price, int stock){
+    public Product(int id, String name, int amount, double price, int stock){
         this.id = id;
         this.name = name;
         this.amount = amount;
@@ -41,11 +41,11 @@ public class Product {
         this.amount = amount;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -58,7 +58,7 @@ public class Product {
     }
 
     public String toString() {
-        return "[" + id + ", " + name + ", " + amount + ", " + price + ", " + stock + "]";
+        return "[" + id + "; " + name + "; " + amount + "; " + price + "; " + stock + "]";
     }
 
 }
